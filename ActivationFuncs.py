@@ -9,7 +9,7 @@ def softmax(W, X):
 
 
 def cross_entropy_loss(y, y_hat):
-    return -np.sum(y * np.log(y_hat))
+    return y * np.log(y_hat)
 
 
 def loss(W, X, y):
@@ -39,11 +39,21 @@ def normalize(v):
 def gradient_check(W, X, y):
     d = normalize(np.random.randn(W.shape[0]))
     epsilon = 1
+    epsilons = []
+    differences = []
     for i in range (1, 10):
         epsilon = epsilon / (2** i)
         print("epsilon", epsilon)
-        loss1 = loss(W + epsilon * d, X, y)
-        loss2 = loss(W - epsilon * d, X, y)
+        loss_epsilon = loss(W + epsilon * d, X, y)
+        loss_regular = loss(W, X, y)
+        difference = np.abs(loss_epsilon - loss_regular)
+        epsilons.append(epsilon)
+        differences.append(difference)
+    plt.plot(epsilons, differences)
+    plt.xlabel('Epsilon')
+    plt.ylabel('Difference')
+    plt.title('Difference by Epsilon')
+    plt.show()
 
 
 
