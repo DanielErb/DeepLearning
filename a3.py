@@ -25,7 +25,7 @@ def sgd(X, y, weights, biases, learning_rate, epochs, batch_size):
         biases -= learning_rate * gradient_biases
 
         # Calculate and print the mean loss after each epoch
-        loss = least_squares_loss(X, y, weights, biases)
+        loss = loss(weights, X, y)
         losses.append(loss)
         graidentWeights.append(gradient_weights)
         print(f"Epoch {epoch + 1}/{epochs}, Mean Loss: {loss}")
