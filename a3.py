@@ -14,7 +14,7 @@ def sgd(X, y, weights, biases, learning_rate, epochs, batch_size):
     num_samples = len(y)
     losses = []
     graidentWeights = []
-
+    percents = []
     for epoch in range(epochs):
         # Shuffle the data at the beginning of each epoch
         print("epoch", epoch)
@@ -24,13 +24,30 @@ def sgd(X, y, weights, biases, learning_rate, epochs, batch_size):
         weights -= learning_rate * gradient_weights
         biases -= learning_rate * gradient_biases
 
-        # Calculate and print the mean loss after each epoch
-        loss = loss(weights, X, y)
-        losses.append(loss)
-        graidentWeights.append(gradient_weights)
-        print(f"Epoch {epoch + 1}/{epochs}, Mean Loss: {loss}")
+        percents.append(calcpercents(y , softmax(weights , X)))
 
-    return weights, biases, losses, graidentWeights
+        # Calculate and print the mean loss after each epoch
+        Loss = loss(weights, X, y)
+        losses.append(Loss)
+        graidentWeights.append(gradient_weights)
+        print(f"Epoch {epoch + 1}/{epochs}, Mean Loss: {Loss}")
+
+    return weights, biases, losses, graidentWeights , percents
+
+
+def calcpercents(y ,y_hat):
+    denominator = y_hat.shape[0]
+    # Find the indices of the maximum values in each row of y_hat
+    max_indices_y_hat = np.argmax(y_hat, axis=1)
+
+    # Find the indices where the value is 1 in each row of y
+    indices_y = np.argmax(y, axis=1)
+
+    # Count the number of matching rows
+    Numerator = np.sum(max_indices_y_hat == indices_y)
+
+    return Numerator / denominator
+
 
 def softmax(W, X):
     temp = np.dot(X.T, W)
@@ -78,3 +95,32 @@ def gradient(X_batch, y_batch, W, B):
     print("db.shape", db.shape)
     # grad = np.concatenate((dw, db), axis=0)
     return dw, dx, db
+
+mat = scipy.io.loadmat('GMMData.mat')
+X_test = mat['Cv'].T
+X_train = mat['Ct'].T
+Y_test = mat['Yv']
+Y_train = mat['Yt']
+
+input_size = X_train.shape[0]
+print(input_size)
+output_size = Y_train.shape[1]
+
+W = np.random.randn(input_size , output_size)
+
+biases = np.random.randn(1,output_size)
+
+learning_rate = 0.1
+num_epochs = 100
+batch_size = 4
+
+weights, biases, losses, graidentWeights, percents = sgd(X_train , Y_train , W , biases , learning_rate , num_epochs , batch_size)
+
+
+
+plt.plot(range(1, num_epochs + 1), percents)
+plt.plot()
+plt.xlabel('Epoch')
+plt.ylabel('Percent')
+plt.title('Success Percent in the train set per epoch')
+plt.show()
