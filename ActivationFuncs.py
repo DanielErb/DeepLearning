@@ -26,7 +26,7 @@ class Softmax:
         # print("y*log", y * np.log(softmax(W, X)))
         # print("-1/m", -1/m*(y * np.log(softmax(W, X))))
         loss_check = -1 / m * (Y * np.log(self.activation(X, W, b))).sum()
-        print("loss_check", loss_check)
+        #print("loss_check", loss_check)
         return loss_check
 
     def gradient(self, X, Y, W = None, b = None):
@@ -44,7 +44,7 @@ class Softmax:
         dx = np.dot(W, (after_softmax - Y).T) / X.shape[1]
         # print("dx.shape", dx.shape)
         db = np.sum((after_softmax - Y), axis=0, keepdims=True) / X.shape[1]
-        print("db", db)
+        #print("db", db)
         # print("db.shape", db.shape)
         # grad = np.concatenate((dw, db), axis=0)
         return dw, dx, db

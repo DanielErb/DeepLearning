@@ -5,38 +5,42 @@ rng = np.random.default_rng()
 
 def sample_minibatch(X, y, batch_size):
     random_indexes = rng.choice(X.shape[1], batch_size, False)
-    print("X.T[random_indexes]", (X.T[random_indexes]))
-    print("X.T[random_indexes].T", (X.T[random_indexes]).T)
-    print(y.shape)
-    print("y[random_indexes]", (y[random_indexes]))
+   # print("X.T[random_indexes]", (X.T[random_indexes]))
+    #print("X.T[random_indexes].T", (X.T[random_indexes]).T)
+    #print(y.shape)
+    #print("y[random_indexes]", (y[random_indexes]))
 
     return (X.T[random_indexes]).T, (y[random_indexes])  # this is because X is of shape 100,2 and y is of shape 100,2
     # so in order to select some random rows from X and y we need to transpose X and then select the rows and then transpose it back
 
 
-def sgd(X, y, layer, learning_rate, epochs, batch_size):
+def sgd(X, y, X_test, y_test, layer, learning_rate, epochs, batch_size):
     num_samples = len(y)
-    losses = []
-    percents = []
+    train_loss = []
+    test_loss = []
+    accuracy_train = []
+    accuracy_test = []
     for epoch in range(epochs):
         # Shuffle the data at the beginning of each epoch
         print("epoch", epoch)
         X_batch, y_batch = sample_minibatch(X, y, batch_size)
+        X_batch_test, y_batch_test = sample_minibatch(X_test, y_test, batch_size)
         dw, dx, db = layer.gradient(X_batch, y_batch)
         layer.W -= learning_rate * dw
         layer.b -= learning_rate * db
 
-        percents.append(calcpercents(y, layer.activation(X)))
+        accuracy_train.append(calcpercents(y, layer.activation(X)))
+        accuracy_test.append(calcpercents(y_test, layer.activation(X_test)))
 
         # Calculate and print the mean loss after each epoch
-        Loss = layer.loss(X_batch, y_batch)
-        losses.append(Loss)
-        print(f"Epoch {epoch + 1}/{epochs}, Mean Loss: {Loss}")
+        #Loss = layer.loss(X_batch, y_batch)
+        test_loss.append(layer.loss(X_batch_test, y_batch_test))
+        train_loss.append(layer.loss(X_batch, y_batch))
 
     # plt.plot(range(1, epochs + 1), losses)
     # plt.show()
 
-    return losses, percents
+    return accuracy_train, accuracy_test, train_loss, test_loss
 
 
 def calcpercents(y, y_hat):
