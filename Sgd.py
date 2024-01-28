@@ -3,18 +3,18 @@ import numpy as np
 rng = np.random.default_rng()
 
 
-# def sample_minibatch(X, y, batch_size):
-#     random_indexes = rng.choice(X.shape[1], batch_size, False)
-#    # print("X.T[random_indexes]", (X.T[random_indexes]))
-#     #print("X.T[random_indexes].T", (X.T[random_indexes]).T)
-#     #print(y.shape)
-#     #print("y[random_indexes]", (y[random_indexes]))
-#
-#     return (X.T[random_indexes]).T, (y[random_indexes])  # this is because X is of shape 100,2 and y is of shape 100,2
-#     # so in order to select some random rows from X and y we need to transpose X and then select the rows and then transpose it back
+def sample_minibatch(X, y, batch_size):
+    random_indexes = rng.choice(X.shape[1], batch_size, False)
+   # print("X.T[random_indexes]", (X.T[random_indexes]))
+    #print("X.T[random_indexes].T", (X.T[random_indexes]).T)
+    #print(y.shape)
+    #print("y[random_indexes]", (y[random_indexes]))
+
+    return (X.T[random_indexes]).T, (y[random_indexes])  # this is because X is of shape 100,2 and y is of shape 100,2
+    # so in order to select some random rows from X and y we need to transpose X and then select the rows and then transpose it back
 
 
-def sgd(X, y, X_test, y_test, layer, learning_rate, epochs, batch_size):
+def sgd(X, y, X_test, y_test, layer, learning_rate, epochs, batch_size, accuracy_sample_size_train, accuracy_sample_size_test):
     num_samples = len(y)
     train_loss = []
     test_loss = []
@@ -37,12 +37,18 @@ def sgd(X, y, X_test, y_test, layer, learning_rate, epochs, batch_size):
             layer.W -= learning_rate * dw
             layer.b -= learning_rate * db
 
-            epoch_train_loss.append(layer.loss(X_batch, y_batch))
-            epoch_accuracy_train.append(calcpercents(y_batch, layer.activation(X_batch)))
-        train_loss.append(np.mean(epoch_train_loss))
-        test_loss.append(layer.loss(X_test, y_test))
-        accuracy_train.append(np.mean(epoch_accuracy_train))
-        accuracy_test.append(calcpercents(y_test, layer.activation(X_test)))
+            #epoch_train_loss.append(layer.loss(X_batch, y_batch))
+            #epoch_accuracy_train.append(calcpercents(y_batch, layer.activation(X_batch)))
+        X_train_sample, y_train_sample = sample_minibatch(X, y, accuracy_sample_size_train)
+        X_test_sample, y_test_sample = sample_minibatch(X_test, y_test, accuracy_sample_size_test)
+        train_loss.append(layer.loss(X_train_sample, y_train_sample))
+        test_loss.append(layer.loss(X_test_sample, y_test_sample))
+        accuracy_train.append(calcpercents(y_train_sample, layer.activation(X_train_sample)))
+        accuracy_test.append(calcpercents(y_test_sample, layer.activation(X_test_sample)))
+        #train_loss.append(np.mean(epoch_train_loss))
+        #test_loss.append(layer.loss(X_test, y_test))
+        #accuracy_train.append(np.mean(epoch_accuracy_train))
+        #accuracy_test.append(calcpercents(y_test, layer.activation(X_test)))
         #
         # print("epoch", epoch)
         # X_batch, y_batch = sample_minibatch(X, y, batch_size)
