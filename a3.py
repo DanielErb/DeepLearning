@@ -19,15 +19,14 @@ def main():
     #print("Y_test.shape", Y_test.shape)
 
     input_size = X_train.shape[1]
-    print(input_size)
     output_size = Y_train.shape[1]
 
     W = np.random.randn(X_train.shape[0], output_size)
 
     biases = np.random.randn(1, output_size)
 
-    learning_rate = 0.1
-    num_epochs = 400
+    learning_rate = 0.001
+    num_epochs = 1000
     batch_size = 32
 
     last_layer = Softmax(W, biases)
@@ -41,8 +40,8 @@ def main():
 
     plt.plot(range(1, num_epochs + 1), train_accuracy, label='Train Accuracy')
     plt.plot(range(1, num_epochs + 1), test_accuracy, label='Test Accuracy')
-    plt.plot(range(1, num_epochs + 1), train_loss, label='Train Loss')
-    plt.plot(range(1, num_epochs + 1), test_loss, label='Test Loss')
+    #plt.plot(range(1, num_epochs + 1), train_loss, label='Train Loss')
+    #plt.plot(range(1, num_epochs + 1), test_loss, label='Test Loss')
     plt.xlabel('Epoch')
     plt.ylabel('Percent')
     plt.title('Success Percent in the train set per epoch')
