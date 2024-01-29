@@ -50,13 +50,6 @@ class Softmax:
         return dw, dx, db
 
 
-
-
-
-
-
-
-
 class tanh:
     def __init__(self, W, b):
         # need to save only W and b because these are the only parameters that we are going to change
