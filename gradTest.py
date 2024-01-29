@@ -133,7 +133,7 @@ def main():
 
     check = Softmax(W, b)
 
-    gradient_checkb(W, X, y, b, check)
+    gradient_checkW(W, X, y, b, check)
 
 
 if __name__ == '__main__':

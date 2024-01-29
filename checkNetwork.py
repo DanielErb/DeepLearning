@@ -17,7 +17,7 @@ def main():
     batch_size = 64
     accuracy_sample_size_train = 6500
     accuracy_sample_size_test = 2500
-    numLayers = 2
+    numLayers = 4
     activationFuncName = 'relu'
 
     neuralNetwork = NeuralNetwork(numLayers, activationFuncName, learning_rate, num_epochs, batch_size, Y_train,

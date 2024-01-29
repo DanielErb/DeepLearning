@@ -56,6 +56,10 @@ class NeuralNetwork:
                 self.biases.append(b)
                 self.layers.append(LayerFunc(w, b, self.activationFuncName))
 
+        # for i in range(1, self.numLayers + 1):
+        #     print("layer", i)
+        #     print("weights", self.weights[i - 1].shape)
+        #     print("biases", self.biases[i - 1].shape)
 
     def runNeuralNetwork(self):
         train_accuracy, test_accuracy, train_loss, test_loss = General_sgd(self.X_train, self.Y_train, self.X_test,
@@ -65,10 +69,10 @@ class NeuralNetwork:
                                                                            self.accuracy_sample_size_train,
                                                                            self.accuracy_sample_size_test)
 
-        #plt.plot(range(1, self.epochs + 1), train_accuracy, label='Train Accuracy')
-        #plt.plot(range(1, self.epochs + 1), test_accuracy, label='Test Accuracy')
-        plt.plot(range(1, self.epochs + 1), train_loss, label='Train Loss')
-        plt.plot(range(1, self.epochs + 1), test_loss, label='Test Loss')
+        plt.plot(range(1, self.epochs + 1), train_accuracy, label='Train Accuracy')
+        plt.plot(range(1, self.epochs + 1), test_accuracy, label='Test Accuracy')
+        #plt.plot(range(1, self.epochs + 1), train_loss, label='Train Loss')
+        #plt.plot(range(1, self.epochs + 1), test_loss, label='Test Loss')
         plt.xlabel('Epoch')
         plt.ylabel('Percent')
         plt.title('Success Percent in the train set per epoch')

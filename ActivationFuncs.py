@@ -13,10 +13,10 @@ class Softmax:
             W = self.W
         if (b is None):
             b = self.b
-        print("X.T.shape", X.T.shape)
-        print("W.shape", W.shape)
-        print("b.shape", b.shape)
-        temp = np.dot(X.T, W) + b
+        #print("X.T.shape", X.T.shape)
+        #print("W.shape", W.shape)
+        #print("b.shape", b.shape)
+        temp = np.dot(X.T, W) + b - np.max(np.dot(X.T, W) + b, axis=1, keepdims=True)
         # sum = np.sum(np.exp(temp), axis=1)
         return np.exp(temp) / np.sum(np.exp(temp), axis=1, keepdims=True)
 
