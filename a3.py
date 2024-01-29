@@ -33,7 +33,8 @@ def main():
 
     last_layer = Softmax(W, biases)
 
-    train_accuracy, test_accuracy, train_loss, test_loss = sgd(X_train, Y_train, X_test, Y_test, last_layer, learning_rate, num_epochs,
+    train_accuracy, test_accuracy, train_loss, test_loss = sgd(X_train, Y_train, X_test, Y_test, last_layer,
+                                                               learning_rate, num_epochs,
                            batch_size, accuracy_sample_size_train, accuracy_sample_size_test)
     # print("bi", biases)
     # print("weights.shape", weights)
