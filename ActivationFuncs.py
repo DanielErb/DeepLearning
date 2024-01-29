@@ -70,3 +70,49 @@ class Softmax:
 #     # print("sum", sum)
 #     print("loss", np.mean(np.sum(cross_entropy_loss(y, y_hat), axis=1)))
 #     return np.mean(np.sum(cross_entropy_loss(y, y_hat), axis=1))
+
+
+
+class tanh:
+    def __init__(self, W, b):
+        # need to save only W and b because these are the only parameters that we are going to change
+        # and X and Y are just sampled per each approch so we dont need to save them
+        self.W = W
+        self.b = b
+
+    def activation(self, X, W = None, b=None):
+        if(W is None):
+            W = self.W
+        if(b is None):
+            b = self.b
+        return np.tanh(np.dot(W, X) + b)
+    
+    def gradient(self, X, V, W = None, b = None):
+        if(W is None):
+            W = self.W
+        if(b is None):
+            b = self.b
+        dw = 
+
+class ActiovationFunc:
+    def __init__(self, W, b, Activation , Derrative):
+        # need to save only W and b because these are the only parameters that we are going to change
+        # and X and Y are just sampled per each approch so we dont need to save them
+        self.W = W
+        self.b = b
+        self.Activate = Activation
+        self.Derrative = Derrative
+    
+    def activation(self, X, W = None, b=None):
+        if(W is None):
+            W = self.W
+        if(b is None):
+            b = self.b
+        return self.Activate(np.dot(W, X) + b)
+    
+    def gradient(self, X, V, W = None, b = None):
+        if(W is None):
+            W = self.W
+        if(b is None):
+            b = self.b
+        dwV dbV dxV = self.Derrative(X, V, W, b)

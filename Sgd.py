@@ -15,7 +15,7 @@ def sample_minibatch(X, y, batch_size):
 
 
 def sgd(X, y, X_test, y_test, layer, learning_rate, epochs, batch_size, accuracy_sample_size_train, accuracy_sample_size_test):
-    num_samples = len(y)
+    #num_samples = len(y)
     train_loss = []
     test_loss = []
     accuracy_train = []
@@ -23,10 +23,10 @@ def sgd(X, y, X_test, y_test, layer, learning_rate, epochs, batch_size, accuracy
     num_points = X.shape[1]
     for epoch in range(epochs):
         # Shuffle the data at the beginning of each epoch
-        epoch_train_loss = []
-        epoch_test_loss = []
-        epoch_accuracy_train = []
-        epoch_accuracy_test = []
+        #epoch_train_loss = []
+        #epoch_test_loss = []
+        #epoch_accuracy_train = []
+        #epoch_accuracy_test = []
         indexes = np.arange(num_points)
         np.random.shuffle(indexes)
         print("epoch", epoch)
