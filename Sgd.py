@@ -159,18 +159,19 @@ def General_sgd(X, y, X_test, y_test, layers, learning_rate, epochs, batch_size,
         indexes = np.arange(num_points)
         np.random.shuffle(indexes)
         print("epoch", epoch)
+        LastX = push_forward(X, first_Layers)
         for i in range(0, num_points, batch_size):
             X_batch = X[:, indexes[i:i + batch_size]]
             y_batch = y[indexes[i:i + batch_size]]
             #dealing with last layer (with softmax):
-            dw, dx, db = last_layer.gradient(X_batch, y_batch)
+            dw, dx, db = last_layer.gradient(LastX, y_batch)
             last_layer.W -= learning_rate * dw
             last_layer.b -= learning_rate * db
 
             #dealing with the rest of the layers:
             dx_holder = dx
             for layer in first_Layers[::-1]:
-                dw, dx, db = layer.gradient(X_batch, dx_holder)
+                dw, dx, db = layer.gradient(layer.X, dx_holder)
                 layer.W -= learning_rate * dw
                 layer.b -= learning_rate * db
                 dx_holder = dx
@@ -208,3 +209,8 @@ def General_sgd(X, y, X_test, y_test, layers, learning_rate, epochs, batch_size,
     # plt.show()
 
     return accuracy_train, accuracy_test, train_loss, test_loss
+
+def push_forward(X, layers):
+    for layer in layers:
+        X = layer.activation(X)
+    return X
