@@ -121,9 +121,10 @@ class ActiovationFunc:
             W = self.W
         if(b is None):
             b = self.b
-        dbV = self.Derrative(np.dot(W, X) + b) * V
-        dwV = np.dot((self.Derrative(np.dot(W, X) + b) * V) , X.T)
-        dxV =  np.dot(W.T , (self.Derrative(np.dot(W, X) + b) * V))
+        derrative = if self.Activate.lower() == "tanh" tanhDerrative else reluDerrative
+        dbV = derrative(np.dot(W, X) + b) * V
+        dwV = np.dot((derrative(np.dot(W, X) + b) * V) , X.T)
+        dxV =  np.dot(W.T , (derrative(np.dot(W, X) + b) * V))
         return dwV, dxV, dbV
     
 
