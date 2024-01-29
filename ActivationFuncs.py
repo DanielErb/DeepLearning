@@ -61,6 +61,7 @@ class LayerFunc:
         self.Activate = Activation
 
     def activation(self, X, W=None, b=None):
+        self.X = X
         if (W is None):
             W = self.W
         if (b is None):
