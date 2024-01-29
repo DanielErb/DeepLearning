@@ -99,4 +99,7 @@ class ActiovationFunc:
             W = self.W
         if(b is None):
             b = self.b
-        dwV dbV dxV = self.Derrative(X, V, W, b)
+        dbV = self.Derrative(np.dot(W, X) + b) * V
+        dwV = np.dot((self.Derrative(np.dot(W, X) + b) * V) , X.T)
+        dxV =  np.dot(W.T , (self.Derrative(np.dot(W, X) + b) * V))
+        return dwV, dxV, dbV
