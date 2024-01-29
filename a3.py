@@ -23,7 +23,7 @@ def main():
 
     W = np.random.randn(X_train.shape[0], output_size)
 
-    biases = np.random.randn(1, output_size)
+    biases = np.random.randn(1,  output_size)
 
     learning_rate = 0.0003
     num_epochs = 1000
@@ -40,10 +40,10 @@ def main():
    # check_loss = last_layer.loss(Y_train, Y_test)
    # print("check_loss", check_loss)
 
-    #plt.plot(range(1, num_epochs + 1), train_accuracy, label='Train Accuracy')
-    #plt.plot(range(1, num_epochs + 1), test_accuracy, label='Test Accuracy')
-    plt.plot(range(1, num_epochs + 1), train_loss, label='Train Loss')
-    plt.plot(range(1, num_epochs + 1), test_loss, label='Test Loss')
+    plt.plot(range(1, num_epochs + 1), train_accuracy, label='Train Accuracy')
+    plt.plot(range(1, num_epochs + 1), test_accuracy, label='Test Accuracy')
+    #plt.plot(range(1, num_epochs + 1), train_loss, label='Train Loss')
+    #plt.plot(range(1, num_epochs + 1), test_loss, label='Test Loss')
     plt.xlabel('Epoch')
     plt.ylabel('Percent')
     plt.title('Success Percent in the train set per epoch')
