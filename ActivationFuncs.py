@@ -75,6 +75,8 @@ class ActiovationFunc:
     def __init__(self, W, b, Activation , Derrative):
         # need to save only W and b because these are the only parameters that we are going to change
         # and X and Y are just sampled per each approch so we dont need to save them
+        if self.Activate.lower() != "tanh" && self.Activate.lower() != "relu":
+            raise ValueError(f"Invalid input: '{Activation}'. Please provide Relu or Tanh")
         self.W = W
         self.b = b
         self.Activate = Activation
@@ -85,11 +87,37 @@ class ActiovationFunc:
             W = self.W
         if(b is None):
             b = self.b
-        return self.Activate(np.dot(W, X) + b)
+        
+        if self.Activate.lower() == "tanh":
+            return np.tanh(np.dot(W, X) + b)
+        
+        return reluActivation(np.dot(W, X) + b)
+         
+    def reluActivation(self, X, W = None, b=None):
+        if(W is None):
+            W = self.W
+        if(b is None):
+            b = self.b
+        return np.maximum(0, np.dot(W, X) + b)
+    
+    
+    def reluDerrative(t):
+        return np.where(t > 0, 1, 0)
+
+    
+    def tanhDerrative(t):
+       
+        return 1 - np.tanh(t)**2
     
     def gradient(self, X, V, W = None, b = None):
         if(W is None):
             W = self.W
         if(b is None):
             b = self.b
-        dwV dbV dxV = self.Derrative(X, V, W, b)
+        derrative = if self.Activate.lower() == "tanh" tanhDerrative else reluDerrative
+        dbV = derrative(np.dot(W, X) + b) * V
+        dwV = np.dot((derrative(np.dot(W, X) + b) * V) , X.T)
+        dxV =  np.dot(W.T , (derrative(np.dot(W, X) + b) * V))
+        return dwV, dxV, dbV
+    
+
