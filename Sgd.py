@@ -159,10 +159,10 @@ def General_sgd(X, y, X_test, y_test, layers, learning_rate, epochs, batch_size,
         indexes = np.arange(num_points)
         np.random.shuffle(indexes)
         print("epoch", epoch)
-        LastX = push_forward(X, first_Layers)
         for i in range(0, num_points, batch_size):
             X_batch = X[:, indexes[i:i + batch_size]]
             y_batch = y[indexes[i:i + batch_size]]
+            LastX = push_forward(X_batch, first_Layers)
             #dealing with last layer (with softmax):
             dw, dx, db = last_layer.gradient(LastX, y_batch)
             last_layer.W -= learning_rate * dw
@@ -181,10 +181,10 @@ def General_sgd(X, y, X_test, y_test, layers, learning_rate, epochs, batch_size,
             #epoch_accuracy_train.append(calcpercents(y_batch, layer.activation(X_batch)))
         X_train_sample, y_train_sample = sample_minibatch(X, y, accuracy_sample_size_train)
         X_test_sample, y_test_sample = sample_minibatch(X_test, y_test, accuracy_sample_size_test)
-        train_loss.append(layer.loss(X_train_sample, y_train_sample))
-        test_loss.append(layer.loss(X_test_sample, y_test_sample))
-        accuracy_train.append(calcpercents(y_train_sample, layer.activation(X_train_sample)))
-        accuracy_test.append(calcpercents(y_test_sample, layer.activation(X_test_sample)))
+        train_loss.append(last_layer.loss(X_train_sample, y_train_sample))
+        test_loss.append(last_layer.loss(X_test_sample, y_test_sample))
+        accuracy_train.append(calcpercents(y_train_sample, last_layer.activation(X_train_sample)))
+        accuracy_test.append(calcpercents(y_test_sample, last_layer.activation(X_test_sample)))
         #train_loss.append(np.mean(epoch_train_loss))
         #test_loss.append(layer.loss(X_test, y_test))
         #accuracy_train.append(np.mean(epoch_accuracy_train))

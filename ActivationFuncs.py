@@ -13,6 +13,9 @@ class Softmax:
             W = self.W
         if (b is None):
             b = self.b
+        print("X.T.shape", X.T.shape)
+        print("W.shape", W.shape)
+        print("b.shape", b.shape)
         temp = np.dot(X.T, W) + b
         # sum = np.sum(np.exp(temp), axis=1)
         return np.exp(temp) / np.sum(np.exp(temp), axis=1, keepdims=True)
@@ -40,6 +43,9 @@ class Softmax:
         # print("after_softmax.shape", after_softmax.shape)
         # print("y_batch.shape", y_batch.shape)
         # print()
+        # print("after_softmax.shape", after_softmax.shape)
+        # print("Y.shape", Y.shape)
+        # print("X.shape", X.shape)
         dw = np.dot(X, (after_softmax - Y)) / X.shape[1]
         dx = np.dot(W, (after_softmax - Y).T) / X.shape[1]
         # print("dx.shape", dx.shape)
@@ -100,7 +106,6 @@ class LayerFunc:
 
         output_before_activation = np.dot(W, X) + b
         dbV = np.sum(derivative(output_before_activation) * V, axis=1, keepdims=True)
-        print("dbV", dbV)
         dwV = np.dot((derivative(output_before_activation) * V), X.T)
         dxV = np.dot(W.T, (derivative(output_before_activation) * V))
         return dwV, dxV, dbV
