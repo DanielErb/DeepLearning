@@ -49,24 +49,8 @@ class Softmax:
         # grad = np.concatenate((dw, db), axis=0)
         return dw, dx, db
 
-# def cross_entropy_loss(y, y_hat):
-#     # print("check", -(y * np.log(y_hat)))
-#     # print("check_y_hat", y_hat)
-#     # print("check_y", y)
-#     # print("check_y_hat", y_hat.shape)
-#     # print("check_y", y.shape)
-#     # print("np,log", np.log(y_hat))
-#     return -(y * np.log(y_hat))
 
 
-# def loss(A, y):
-#      y_hat = softmax(A)
-#      return np.mean(cross_entropy_loss(y, y_hat))
 
-# def loss(W, X, y):
-#     y_hat = softmax(W, X)
-#     cross_entropy = cross_entropy_loss(y, y_hat)
-#     # sum = np.sum(np.sum(cross_entropy, axis=1), axis=0)
-#     # print("sum", sum)
-#     print("loss", np.mean(np.sum(cross_entropy_loss(y, y_hat), axis=1)))
-#     return np.mean(np.sum(cross_entropy_loss(y, y_hat), axis=1))
+
+
