@@ -1,12 +1,6 @@
-import scipy.io
+import MatData
 
-mat = scipy.io.loadmat('PeaksData.mat')
-
-Y_train = mat['Ct'].T
-X_train = mat['Yt']
-
-Y_test = mat['Cv'].T
-X_test = mat['Yv']
+Y_train , X_train, Y_test, X_test = MatData.fetch('PeaksData.mat')
 
 learning_rate = 0.0003
 num_epochs = 1000
