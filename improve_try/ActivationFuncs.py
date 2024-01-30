@@ -125,6 +125,7 @@ class LayerFunc:
             dbV = np.sum(derivative(output_before_activation) * V, axis=1, keepdims=True)
             dwV = np.dot((derivative(output_before_activation) * V), X.T)
             dxV = np.dot(W.T, (derivative(output_before_activation) * V))
-            return dwV, dxV, dbV
+            dw2V = None #in standard network there is no W2 for a single layer
+            return dwV, dw2V, dxV, dbV
         else:
             raise NotImplementedError("This hasn't been implemented yet")
