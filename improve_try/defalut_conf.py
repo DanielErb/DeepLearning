@@ -7,6 +7,6 @@ num_epochs = 1000
 batch_size = 64
 accuracy_sample_size_train = 6500
 accuracy_sample_size_test = 2500
-numLayers = 4
+numLayers = 2
 activationFuncName = 'relu'
 NetworkType = 'standard'
