@@ -171,9 +171,11 @@ def General_sgd(X, y, X_test, y_test, layers, learning_rate, epochs, batch_size,
             #dealing with the rest of the layers:
             dx_holder = dx
             for layer in first_Layers[::-1]:
-                dw, dx, db = layer.gradient(layer.X, dx_holder)
+                dw, dw2, dx, db = layer.gradient(layer.X, dx_holder)
                 layer.W -= learning_rate * dw
                 layer.b -= learning_rate * db
+                if (dw2 is not None):
+                    layer.W2 -= learning_rate * dw2
                 dx_holder = dx
 
 
