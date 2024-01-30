@@ -12,12 +12,12 @@ def main():
     Y_test = mat['Cv'].T
     X_test = mat['Yv']
 
-    learning_rate = 0.0003
+    learning_rate = 0.00001
     num_epochs = 1000
     batch_size = 64
     accuracy_sample_size_train = 6500
     accuracy_sample_size_test = 2500
-    numLayers = 4
+    numLayers = 3
     activationFuncName = 'relu'
 
     neuralNetwork = NeuralNetwork(numLayers, activationFuncName, learning_rate, num_epochs, batch_size, Y_train,

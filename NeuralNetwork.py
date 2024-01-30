@@ -56,10 +56,8 @@ class NeuralNetwork:
                 self.biases.append(b)
                 self.layers.append(LayerFunc(w, b, self.activationFuncName))
 
-        # for i in range(1, self.numLayers + 1):
-        #     print("layer", i)
-        #     print("weights", self.weights[i - 1].shape)
-        #     print("biases", self.biases[i - 1].shape)
+        for layer in self.layers:
+             print("weights", layer.W.shape)
 
     def runNeuralNetwork(self):
         train_accuracy, test_accuracy, train_loss, test_loss = General_sgd(self.X_train, self.Y_train, self.X_test,

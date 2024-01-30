@@ -10,7 +10,10 @@ import numpy as np
 
 
 class NeuralNetwork:
-    def __init__(self, numLayers = defalut_conf.numLayers, activationFuncName = defalut_conf.activationFuncName, learning_rate = defalut_conf.learning_rate, epochs = defalut_conf.num_epochs, batch_size = defalut_conf.batch_size, Y_train = defalut_conf.Y_train, X_train = defalut_conf.X_train, Y_test = defalut_conf.Y_test, X_test = defalut_conf.X_test,
+    def __init__(self, numLayers = defalut_conf.numLayers, activationFuncName = defalut_conf.activationFuncName,
+                 learning_rate = defalut_conf.learning_rate, epochs = defalut_conf.num_epochs,
+                 batch_size = defalut_conf.batch_size, Y_train = defalut_conf.Y_train, X_train = defalut_conf.X_train,
+                 Y_test = defalut_conf.Y_test, X_test = defalut_conf.X_test,
                accuracy_sample_size_train = defalut_conf.accuracy_sample_size_train, accuracy_sample_size_test = defalut_conf.accuracy_sample_size_test , networkType = defalut_conf.NetworkType):
         self.numLayers = numLayers
         self.activationFuncName = activationFuncName
@@ -23,10 +26,12 @@ class NeuralNetwork:
         self.X_test = X_test
         self.accuracy_sample_size_train = accuracy_sample_size_train
         self.accuracy_sample_size_test = accuracy_sample_size_test
+        self.networkType = networkType
         self.weights = []
+        self.weights2 = []
         self.biases = []
         self.layers = []
-        self.networkType = networkType
+
         self.buildNeuralNetwork()
 
     def buildNeuralNetwork(self):
