@@ -82,11 +82,22 @@ class LayerFunc:
         if self.Activate.lower() == "relu":
             return self.reluActivation(X)
         else:
-            if self.networkType == 'standard':
-                return np.tanh(np.dot(W, X) + b)
-            else:
-                return X + np.dot(W2, np.tanh(np.dot(W, X) + b))
+            return self.tanhActivation(X)
 
+    def tanhActivation(self, X, W=None, b=None, W2 = None):
+        if (W is None):
+            W = self.W
+        if (b is None):
+            b = self.b
+        if(W2 is None):
+            W2 = self.W2
+        if self.networkType == 'standard':
+            return np.tanh(np.dot(W, X) + b)
+        else:
+            return X + np.dot(W2, np.tanh(np.dot(W, X) + b))
+
+    def reluFunc(self, t):
+        return np.maximum(0, t)
     def reluActivation(self, X, W=None, b=None, W2 = None):
         if (W is None):
             W = self.W
@@ -95,9 +106,12 @@ class LayerFunc:
         if(W2 is None):
             W2 = self.W2
         if self.networkType == 'standard':
-            return np.maximum(0, np.dot(W, X) + b)
+            return self.reluFunc(np.dot(W, X) + b)
         else:
-            return X + np.dot(W2, np.maximum(0, np.dot(W, X) + b))
+            return X + np.dot(W2, self.reluFunc(np.dot(W, X) + b))
+
+
+
 
     def reluDerivative(self, t):
         return np.where(t > 0, 1, 0)
@@ -120,12 +134,22 @@ class LayerFunc:
         else:
             derivative = self.tanhDerivative
 
+        activationFunc = None
+        if self.Activate == "relu":
+            activationFunc = self.reluFunc
+        else:
+            activationFunc = np.tanh
+
+        output_before_activation = np.dot(W, X) + b
         if self.networkType == 'standard':
-            output_before_activation = np.dot(W, X) + b
             dbV = np.sum(derivative(output_before_activation) * V, axis=1, keepdims=True)
             dwV = np.dot((derivative(output_before_activation) * V), X.T)
             dxV = np.dot(W.T, (derivative(output_before_activation) * V))
             dw2V = None #in standard network there is no W2 for a single layer
             return dwV, dw2V, dxV, dbV
         else:
-            raise NotImplementedError("This hasn't been implemented yet")
+            dbV = np.sum(derivative(output_before_activation) * np.dot(W2.T,V), axis=1, keepdims=True)
+            dwV = np.dot(derivative(output_before_activation) * np.dot(W2.T , V), X.T)
+            dw2V = np.dot(V ,activationFunc(output_before_activation).T)
+            dxV = V + np.dot(W.T, derivative(output_before_activation) * np.dot(W2.T , V))
+            return dwV, dw2V, dxV, dbV
