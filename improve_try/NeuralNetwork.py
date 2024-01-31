@@ -61,8 +61,12 @@ class NeuralNetwork:
                     self.weights2.append(w2)
                 self.weights.append(w)
                 self.biases.append(b)
-                self.layers.append(
-                    LayerFunc(W=w, b=b, Activation=self.activationFuncName, networkType=self.networkType, W2=w2))
+                if self.networkType == "standard":
+                    self.layers.append(
+                        LayerFunc(W=w, b=b, Activation=self.activationFuncName, networkType=self.networkType))
+                else:
+                    self.layers.append(
+                        LayerFunc(W=w, b=b, Activation=self.activationFuncName, networkType=self.networkType, W2=w2))
             else:
                 num_weights = random.randint(50, 100)
                 b = np.random.randn(num_weights, 1)
@@ -74,8 +78,12 @@ class NeuralNetwork:
                     self.weights2.append(w2)
                 self.weights.append(w)
                 self.biases.append(b)
-                self.layers.append(
-                    LayerFunc(W=w, b=b, Activation=self.activationFuncName, networkType=self.networkType, W2=w2))
+                if self.networkType == "standard":
+                    self.layers.append(
+                        LayerFunc(W=w, b=b, Activation=self.activationFuncName, networkType=self.networkType))
+                else:
+                    self.layers.append(
+                        LayerFunc(W=w, b=b, Activation=self.activationFuncName, networkType=self.networkType, W2=w2))
 
         # for i in range(1, self.numLayers + 1):
         #     print("layer", i)
