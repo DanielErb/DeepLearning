@@ -82,14 +82,14 @@ class LayerFunc:
         if self.Activate.lower() == "relu":
             return self.reluActivation(X)
         else:
-            return self.tanhActivation(X)
+            return self.tanhActivation(X, W, b, W2)  # for jacobian test
 
-    def tanhActivation(self, X, W=None, b=None, W2 = None):
+    def tanhActivation(self, X, W=None, b=None, W2=None):
         if (W is None):
             W = self.W
         if (b is None):
             b = self.b
-        if(W2 is None):
+        if (W2 is None):
             W2 = self.W2
         if self.networkType == 'standard':
             return np.tanh(np.dot(W, X) + b)
@@ -98,20 +98,18 @@ class LayerFunc:
 
     def reluFunc(self, t):
         return np.maximum(0, t)
-    def reluActivation(self, X, W=None, b=None, W2 = None):
+
+    def reluActivation(self, X, W=None, b=None, W2=None):
         if (W is None):
             W = self.W
         if (b is None):
             b = self.b
-        if(W2 is None):
+        if (W2 is None):
             W2 = self.W2
         if self.networkType == 'standard':
             return self.reluFunc(np.dot(W, X) + b)
         else:
             return X + np.dot(W2, self.reluFunc(np.dot(W, X) + b))
-
-
-
 
     def reluDerivative(self, t):
         return np.where(t > 0, 1, 0)
@@ -120,13 +118,14 @@ class LayerFunc:
 
         return 1 - np.tanh(t) ** 2
 
-    def gradient(self, X, V, W=None, b=None, W2 = None):
+    def gradient(self, X, V, W=None, b=None, W2=None):
         if (W is None):
             W = self.W
         if (b is None):
             b = self.b
-        if(W2 is None):
+        if (W2 is None):
             W2 = self.W2
+
 
         derivative = None
         if self.Activate == "relu":
@@ -145,11 +144,11 @@ class LayerFunc:
             dbV = np.sum(derivative(output_before_activation) * V, axis=1, keepdims=True)
             dwV = np.dot((derivative(output_before_activation) * V), X.T)
             dxV = np.dot(W.T, (derivative(output_before_activation) * V))
-            dw2V = None #in standard network there is no W2 for a single layer
+            dw2V = None  # in standard network there is no W2 for a single layer
             return dwV, dw2V, dxV, dbV
         else:
-            dbV = np.sum(derivative(output_before_activation) * np.dot(W2.T,V), axis=1, keepdims=True)
-            dwV = np.dot(derivative(output_before_activation) * np.dot(W2.T , V), X.T)
-            dw2V = np.dot(V ,activationFunc(output_before_activation).T)
-            dxV = V + np.dot(W.T, derivative(output_before_activation) * np.dot(W2.T , V))
+            dbV = np.sum(derivative(output_before_activation) * np.dot(W2.T, V), axis=1, keepdims=True)
+            dwV = np.dot(derivative(output_before_activation) * np.dot(W2.T, V), X.T)
+            dw2V = np.dot(V, activationFunc(output_before_activation).T)
+            dxV = V + np.dot(W.T, derivative(output_before_activation) * np.dot(W2.T, V))
             return dwV, dw2V, dxV, dbV
