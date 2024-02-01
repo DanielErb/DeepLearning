@@ -20,7 +20,7 @@ def jacobian_CheckX(W, W2, X, b, check):
     epsilons = []
     differences = []
     differences_with_grad = []
-    u = np.random.randn(W.shape[0], X.shape[1])
+    u = np.random.randn(X.shape[0], X.shape[1])
     for i in range(1, 20):
         epsilon = (0.5 ** i)
         dwu, dw2u, dxu, dbu = check.gradient(X, u)
@@ -57,7 +57,7 @@ def jacobian_CheckW(W, W2, X, b, check):
     epsilons = []
     differences = []
     differences_with_grad = []
-    u = np.random.randn(W.shape[0], X.shape[1])
+    u = np.random.randn(X.shape[0], X.shape[1])
     for i in range(1, 20):
         epsilon = (0.5 ** i)
         dwu,dw2u, dxu, dbu = check.gradient(X, u)
@@ -96,7 +96,7 @@ def jacobian_CheckW2(W, W2, X, b, check):
     epsilons = []
     differences = []
     differences_with_grad = []
-    u = np.random.randn(W.shape[0], X.shape[1])
+    u = np.random.randn(X.shape[0], X.shape[1])
     for i in range(1, 20):
         epsilon = (0.5 ** i)
         dwu,dw2u, dxu, dbu = check.gradient(X, u)
@@ -133,7 +133,7 @@ def jacobian_Checkb(W,W2, X, b, check):
     epsilons = []
     differences = []
     differences_with_grad = []
-    u = np.random.randn(W.shape[0], X.shape[1])
+    u = np.random.randn(X.shape[0], X.shape[1])
     for i in range(1, 20):
         epsilon = (0.5 ** i)
         dwu,dw2, dxu, dbu = check.gradient(X, u)
