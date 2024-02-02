@@ -149,6 +149,9 @@ class LayerFunc:
         else:
             dbV = np.sum(derivative(output_before_activation) * np.dot(W2.T, V), axis=1, keepdims=True)
             dwV = np.dot(derivative(output_before_activation) * np.dot(W2.T, V), X.T)
-            dw2V = np.dot(V, activationFunc(output_before_activation).T)
+            if self.Activate == "relu":
+                dw2V = np.dot(V, self.reluFunc(output_before_activation).T)
+            else:
+                dw2V = np.dot(V, np.tanh(output_before_activation).T) #calling to function is not correct
             dxV = V + np.dot(W.T, derivative(output_before_activation) * np.dot(W2.T, V))
             return dwV, dw2V, dxV, dbV
