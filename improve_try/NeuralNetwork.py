@@ -53,7 +53,7 @@ class NeuralNetwork:
                 self.layers.append(Softmax(W=w, b=b))
 
             elif i == 1:  # at least 2 layers
-                num_weights = random.randint(50, 100)
+                num_weights = 68
                 w = np.random.randn(num_weights, self.X_train.shape[0])
                 b = np.random.randn(num_weights, 1)
                 if self.networkType == "ResNet":
@@ -68,7 +68,7 @@ class NeuralNetwork:
                     self.layers.append(
                         LayerFunc(W=w, b=b, Activation=self.activationFuncName, networkType=self.networkType, W2=w2))
             else:
-                num_weights = random.randint(50, 100)
+                num_weights = 90
                 b = np.random.randn(num_weights, 1)
                 if self.networkType == "standard":
                     w = np.random.randn(num_weights, self.weights[i - 2].shape[0])  # -2 because i starts from 1
