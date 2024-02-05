@@ -1,6 +1,6 @@
 import MatData
 
-Y_train , X_train, Y_test, X_test = MatData.fetch('PeaksData.mat')
+Y_train, X_train, Y_test, X_test = MatData.fetch('PeaksData.mat')
 
 learning_rate = 0.0003
 num_epochs = 1000

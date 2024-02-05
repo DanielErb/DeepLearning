@@ -152,6 +152,6 @@ class LayerFunc:
             if self.Activate == "relu":
                 dw2V = np.dot(V, self.reluFunc(output_before_activation).T)
             else:
-                dw2V = np.dot(V, np.tanh(output_before_activation).T) #calling to function is not correct
+                dw2V = np.dot(V, np.tanh(output_before_activation).T)
             dxV = V + np.dot(W.T, derivative(output_before_activation) * np.dot(W2.T, V))
             return dwV, dw2V, dxV, dbV
