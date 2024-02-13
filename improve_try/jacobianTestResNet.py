@@ -181,7 +181,7 @@ def main():
 
     check = LayerFunc(W, b, "tanh", "ResNet", W2)
 
-    jacobian_CheckW2(W, W2, X, b, check)
+    jacobian_CheckW(W, W2, X, b, check)
 
 
 if __name__ == '__main__':

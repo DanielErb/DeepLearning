@@ -4,7 +4,7 @@ from NeuralNetwork import NeuralNetwork
 
 def main():
 
-    neuralNetwork = NeuralNetwork(networkType="ResNet" , epochs=50)
+    neuralNetwork = NeuralNetwork()
     neuralNetwork.runNeuralNetwork()
 
 

@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from ActivationFuncs import Softmax
-from improve_try.Sgd import push_forward
-from improve_try.NeuralNetwork import NeuralNetwork
+from Sgd import push_forward
+from NeuralNetwork import NeuralNetwork
 
 
 def normalize(v):
